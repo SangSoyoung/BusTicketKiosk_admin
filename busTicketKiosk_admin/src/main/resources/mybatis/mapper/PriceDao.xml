@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- 버스 요금 -->
+<mapper namespace="com.busKiosk.demo.dao.ITickePriceDao">
+
+	<!-- 1. 조회 -->
+	<select id="ticketPriceList" resultType="com.busKiosk.demo.dto.TicketPriceDto">
+		SELECT * FROM ticket_price
+	</select>
+	
+	<!-- 2. 추가 -->
+	<insert id="insertTicketPrice">
+		INSERT INTO ticket_price VALUES(#{items1}, #{items2})
+	</insert>
+	
+	<!-- 3. 수정 -->
+	<update id="updateTicketPrice">
+		UPDATE ticket_price SET type={items1}, price={items2} WHERE type={items3}
+	</update>
+	
+	<!-- 4. 삭제 -->
+	<delete id="deleteTicketPrice">
+		DELETE FROM ticket_price WHERE type=#{type
+	</delete>
+</mapper>

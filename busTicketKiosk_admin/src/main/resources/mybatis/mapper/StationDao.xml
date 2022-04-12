@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 버스 목록 -->
+<mapper namespace="com.busKiosk.demo.dao.IStationDao">
+
+	<!-- 1. 조회 -->
+	<select id="stationList" resultType="com.busKiosk.demo.dto.StationDto">
+		SELECT * FROM bus_station;
+	</select>
+	
+	<!-- 2. 검색(역명) -->
+	<select id="searchStation" resultType="com.busKiosk.demo.dto.StationDto">
+		SELECT * FROM bus_station WHERE station LIKE '%'||#{station}||'%';
+	</select>
+	
+	<!-- 3. 추가 -->
+	<insert id="insertStation">
+		INSERT INTO bus_station (city, station) VALUES (#{items1}, #{items2});
+	</insert>
+	
+	<!-- 4. 수정 -->
+	<update id="updateStation">
+		UPDATE bus_station SET city=#{items1}, station=#{items2} WHERE station=#{items3};
+	</update>
+	
+	<!-- 5. 삭제 -->
+	<delete id="deleteStation">
+		DELETE FROM bus_station WHERE station=#{station};
+	</delete>
+	
+</mapper>

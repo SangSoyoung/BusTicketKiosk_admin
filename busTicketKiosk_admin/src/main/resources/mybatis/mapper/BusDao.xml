@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 버스 목록 -->
+<mapper namespace="com.busKiosk.demo.dao.IBusDao">
+
+	<!-- 1. 조회 -->
+	<select id="busList" resultType="com.busKiosk.demo.dto.BusDto">
+		SELECT * FROM bus_data
+	</select>
+	
+	<!-- 2. 검색(버스명) -->
+	<select id="searchBus" resultType="com.busKiosk.demo.dto.BusDto">
+		SELECT * FROM bus_data WHERE busNo LIKE '%'||#{busNo}||'%'
+	</select>
+	
+	<!-- 3. 추가 -->
+	<insert id="insertBus">
+		INSERT INTO bus_data VALUES (#{items1}, #{items2}, #{items3}, #{items4}, #{items5}, #{items6})
+	</insert>
+	
+	<!-- 4. 수정 -->
+	<update id="updateBus">
+	UPDATE bus_data SET 
+		busNo=#{items1}, seat=#{items2}, grade=#{items3}, company=#{items4}, plate=#{items5}, driver=#{items6} 
+	WHERE busNo=#{item7}
+	</update>
+	
+	<!-- 5. 삭제 -->
+	<delete id="deleteBus">
+	DELETE FROM bus_data WHERE busNo=#{busNo}
+	</delete>
+	
+</mapper>

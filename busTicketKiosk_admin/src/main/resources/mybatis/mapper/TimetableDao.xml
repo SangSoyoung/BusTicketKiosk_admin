@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 배차 시간표 -->
+<mapper namespace="com.busKiosk.demo.dao.ITimetableDao">
+
+	<!-- 1-1. 조회(버스별) -->
+	<select id="busTimetableList" resultType="com.busKiosk.demo.dto.TimetableDto">
+		SELECT * FROM bus_timetable WHERE busNo=#{busNo};
+	</select>
+	
+	<!-- 1-2. 조회(역별) -->
+	<select id="stationTimetableList" resultType="com.busKiosk.demo.dto.TimetableDto">
+		SELECT * FROM bus_timetable WHERE dpt_st=#{station};
+	</select>
+	
+	<!-- 2-1. 검색(버스별-배차) -->
+	<select id="searchBusTimetable" resultType="com.busKiosk.demo.dto.TimetableDto">
+		SELECT * FROM bus_timetable 
+			WHERE busNo=#{busNo} and to_char(ddate, 'yyyyMMdd')=#{ddate}
+	</select>
+	
+	<!-- 2-2. 검색(역별-배차) -->
+	<select id="searchStationTimetable" resultType="com.busKiosk.demo.dto.TimetableDto">
+		SELECT * FROM bus_timetable 
+			WHERE dpt_st=#{station} and to_char(ddate, 'yyyyMMdd')=#{ddate}
+	</select>
+	
+	<!-- 3. 시간표 추가 -->
+	<insert id="insertBusTimetable">
+		insert into bus_timetable values (
+	        #{items1}, #{items2}, #{items3}, 
+	        to_date(#{items4}, 'yyyy-MM-dd HH24:MI'), 
+	        to_date(#{items5}, 'yyyy-MM-dd HH24:MI'), 
+	        #{items6}, #{items7}, #{items8}, #{items9});
+	</insert>
+	<!-- 3-1. 버스좌석 테이블 생성 -->
+	<select id="createSeatTable" parameterType="map">
+		${create_table}
+	</select>
+	<!-- 3-2. 좌석정보 추가 -->
+	<insert id="insertSeatData">
+		 insert into bus_seat_#{tableId} values (#{seatNo}, 0);
+	</insert>
+	
+	<!-- 4. 수정 -->
+	<update id="updateTimetable">
+		UPDATE bus_timetable SET 
+	        busNo=#{items1}, 
+	        dpt_st=#{items2}, 
+	        arrv_st=#{items2}, 
+	        ddate=to_date(#{items3}, 'yyyy-MM-dd HH24:MI'), 
+	        adate=to_date(#{items4}, 'yyyy-MM-dd HH24:MI'), 
+	        seat=#{items5}, 
+	        unBookedSeat=#{items6}, 
+	        grade=#{items7}, 
+	        company=#{items8} 
+    	WHERE ddate=to_date(#{items9}, 'yyyy-MM-dd HH24:MI') 
+    		and busno=#{items10}
+	</update>
+	
+	<!-- 5. 삭제 -->
+	<delete id="deleteTimetable">
+		DELETE FROM bus_timetable 
+        WHERE busNo=#{busNo} 
+        	and ddate=to_date(#{ddate}, 'yyyy-MM-dd HH24:MI');
+	</delete>
+		
+</mapper>

@@ -1,0 +1,53 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.busKiosk'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	
+	// 추가
+	developmentOnly
+	runtimeClasspath{
+		extendsFrom developmentOnly
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// jstl, jsp 쓰기
+	implementation 'javax.servlet:jstl'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
+	// 개발자가 작업중이라는 의미 : 수정이 일어나서 저장하고나면 서버를 자동으로 다시 껐다켜줌
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	
+	// json 쓰기
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	// implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
